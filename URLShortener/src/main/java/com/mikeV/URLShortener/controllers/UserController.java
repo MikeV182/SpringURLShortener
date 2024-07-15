@@ -1,6 +1,7 @@
 package com.mikeV.URLShortener.controllers;
 
 import com.mikeV.URLShortener.model.UserInput;
+import com.mikeV.URLShortener.services.ShortURLGenerator;
 import com.mikeV.URLShortener.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,14 +16,14 @@ public class UserController {
 
     @GetMapping("/")
     public String userPage(Model model) {
-        model.addAttribute("userPage", userService.listUsers());
+        model.addAttribute("userPage", userService.getUserInputById(0L));
         return "userPage";
     }
 
     @PostMapping("/generate")
     public String generateURL(UserInput input) {
         userService.addURL(input);
-        //TODO: generate short URL
+        ShortURLGenerator.generateShortURL(input);
         return "redirect:/";
     }
 }

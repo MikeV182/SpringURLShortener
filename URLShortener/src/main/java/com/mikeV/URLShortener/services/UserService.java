@@ -12,12 +12,19 @@ public class UserService {
     private Long ID = 0L;
 
     {
-        urls.add(new UserInput(ID++, "https://www.google.com/", ""));
-        urls.add(new UserInput(ID++, "https://www.youtube.com/", ""));
+        urls.add(new UserInput(ID++, "https://www.google.com/", "http://shrtRL/tst1"));
+        urls.add(new UserInput(ID++, "https://www.youtube.com/", "http://shrtRL/tst2"));
     }
 
-    public List<UserInput> listUsers() {
+    public List<UserInput> listUrls() {
         return urls;
+    }
+
+    public UserInput getUserInputById(Long id) {
+        for (UserInput url : urls) {
+            if (url.getId().equals(id)) return url;
+        }
+        return null;
     }
 
     public void addURL(UserInput newURL) {
@@ -28,5 +35,4 @@ public class UserService {
     public void deleteURL(Long id) {
         urls.removeIf(url -> url.getId().equals(id));
     }
-
 }

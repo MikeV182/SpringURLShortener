@@ -7,8 +7,10 @@
 <body>
 <h1>URL SHORTENER</h1><hr>
 <form action="/generate" method="post">
-    Original URL: <input type="text" name="origin"/><br><br>
-    Shorten URL: <output name="result"/><br><br>
+    Original URL: <input type="text" name="origin"/>
+    <br><br>
+    Shorten URL: ${userPage.shortURL}
+    <br><br>
     <input type="submit" value="Generate"/>
 </form>
 </body>
