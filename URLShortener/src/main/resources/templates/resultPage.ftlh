@@ -8,12 +8,12 @@
 
 <body>
 <h1>URL SHORTENER</h1><hr>
-<form action="/generate" method="post">
-    Original URL: <input type="text" name="originURL" required/>
+<form action="/" method="get">
+    Original URL: ${resultPage.originURL}
     <br><br>
-    Shorten URL:
+    Shorten URL: ${resultPage.shortURL}
     <br><br>
-    <input type="submit" value="Generate"/>
+    <input type="submit" value="Return to the main page"/>
 </form>
 </body>
 

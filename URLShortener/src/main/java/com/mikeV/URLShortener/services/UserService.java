@@ -1,38 +1,38 @@
 package com.mikeV.URLShortener.services;
 
 import com.mikeV.URLShortener.model.UserInput;
+import com.mikeV.URLShortener.repositories.ClientRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class UserService {
-    private List<UserInput> urls = new ArrayList<>();
-    private Long ID = 0L;
+    private final ClientRepository clientRepository;
 
-    {
-        urls.add(new UserInput(ID++, "https://www.google.com/", "http://shrtRL/tst1"));
-        urls.add(new UserInput(ID++, "https://www.youtube.com/", "http://shrtRL/tst2"));
+    public void add(UserInput newUrl) {
+        log.info("Added new URL");
+        clientRepository.save(newUrl);
     }
 
-    public List<UserInput> listUrls() {
-        return urls;
+    public void update(UserInput savedUrl) {
+        UserInput input = clientRepository.findById(savedUrl.getId()).orElse(null);
+        if (input != null) {
+            log.info("Updated existing URL {}", input);
+            input.setShortURL(savedUrl.getShortURL());
+            input.setOriginURL(savedUrl.getOriginURL());
+        } else {
+            input = new UserInput();
+            input.setOriginURL(savedUrl.getOriginURL());
+            input.setShortURL(savedUrl.getShortURL());
+            log.info("Created new URL {}", input);
+        }
+        clientRepository.save(input);
     }
 
     public UserInput getUserInputById(Long id) {
-        for (UserInput url : urls) {
-            if (url.getId().equals(id)) return url;
-        }
-        return null;
-    }
-
-    public void addURL(UserInput newURL) {
-        newURL.setId(ID++);
-        urls.add(newURL);
-    }
-
-    public void deleteURL(Long id) {
-        urls.removeIf(url -> url.getId().equals(id));
+        return clientRepository.findById(id).orElse(null);
     }
 }
