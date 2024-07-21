@@ -15,6 +15,7 @@ public class UserService implements Constants {
 
     public void add(UserInput newUrl) {
         log.info("Added new URL");
+        newUrl.setUsersUsed(0L);
         clientRepository.save(newUrl);
     }
 
@@ -24,10 +25,12 @@ public class UserService implements Constants {
             log.info("Updated existing URL {}", input);
             input.setShortURL(savedUrl.getShortURL());
             input.setOriginURL(savedUrl.getOriginURL());
+            input.setUsersUsed(savedUrl.getUsersUsed());
         } else {
             input = new UserInput();
             input.setOriginURL(savedUrl.getOriginURL());
             input.setShortURL(savedUrl.getShortURL());
+            input.setUsersUsed(savedUrl.getUsersUsed());
             log.info("Created new URL {}", input);
         }
         clientRepository.save(input);
@@ -39,5 +42,9 @@ public class UserService implements Constants {
 
     public UserInput getUserInputById(Long id) {
         return clientRepository.findById(id).orElse(null);
+    }
+
+    public void increaseUsersUsed(UserInput input) {
+        input.setUsersUsed(input.getUsersUsed() + 1);
     }
 }

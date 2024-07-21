@@ -3,7 +3,7 @@
   
 <head>
     <meta charset="UTF-8">
-    <title>shrtRL</title>
+    <title>shrtrl.ru</title>
 </head>
 
 <body>

@@ -21,4 +21,7 @@ public class UserInput {
 
     @Column(name = "shortURL", columnDefinition = "text")
     private String shortURL;
+
+    @Column(name="usersUsed")
+    private Long usersUsed;
 }

@@ -30,6 +30,8 @@ public class UserController {
     @GetMapping("/{token}")
     public String redirectByToken(@PathVariable String token) {
         UserInput user = userService.getUserByToken(token);
+        userService.increaseUsersUsed(user);
+        userService.update(user);
         return "redirect:"+user.getOriginURL();
     }
 

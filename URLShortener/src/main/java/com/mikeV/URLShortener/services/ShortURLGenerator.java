@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShortURLGenerator implements Constants {
-    private static final int base = 62;
-    private static final String alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
     public static void generateShortURL(UserInput input) {
         input.setShortURL(mapping(bijection(input)));
     }
@@ -18,9 +15,9 @@ public class ShortURLGenerator implements Constants {
         List<Integer> digits = new ArrayList<>();
         Long id = input.getId();
         while(id > 0) {
-            Integer remainder = id.intValue() % base;
+            Integer remainder = id.intValue() % BASE;
             digits.add(remainder);
-            id /= base;
+            id /= BASE;
         }
         return digits.reversed();
     }
@@ -29,7 +26,7 @@ public class ShortURLGenerator implements Constants {
         StringBuilder shortURL = new StringBuilder();
         shortURL.append(DOMAIN_NAME);
         for (Integer digit : digits) {
-            shortURL.append(alphabet.charAt(digit));
+            shortURL.append(ALPHABET.charAt(digit));
         }
         return shortURL.toString();
     }
