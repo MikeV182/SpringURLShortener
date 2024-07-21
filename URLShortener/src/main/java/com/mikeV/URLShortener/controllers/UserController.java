@@ -27,6 +27,12 @@ public class UserController {
         return "resultPage";
     }
 
+    @GetMapping("/{token}")
+    public String redirectByToken(@PathVariable String token) {
+        UserInput user = userService.getUserByToken(token);
+        return "redirect:"+user.getOriginURL();
+    }
+
     @PostMapping("/generate")
     public String generateURL(UserInput input) {
         userService.add(input);

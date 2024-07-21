@@ -2,6 +2,7 @@ package com.mikeV.URLShortener.services;
 
 import com.mikeV.URLShortener.model.UserInput;
 import com.mikeV.URLShortener.repositories.ClientRepository;
+import com.mikeV.URLShortener.repositories.Constants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class UserService {
+public class UserService implements Constants {
     private final ClientRepository clientRepository;
 
     public void add(UserInput newUrl) {
@@ -30,6 +31,10 @@ public class UserService {
             log.info("Created new URL {}", input);
         }
         clientRepository.save(input);
+    }
+
+    public UserInput getUserByToken(String token) {
+        return clientRepository.findByShortURL(DOMAIN_NAME+token);
     }
 
     public UserInput getUserInputById(Long id) {
