@@ -47,4 +47,12 @@ public class UserService implements Constants {
     public void increaseUsersUsed(UserInput input) {
         input.setUsersUsed(input.getUsersUsed() + 1);
     }
+
+    public UserInput urlAlreadyExistInDB(UserInput input) {
+        return clientRepository.findByOriginURL(input.getOriginURL());
+    }
+
+    public Long idOfAlreadyExistingURL(UserInput input) {
+        return clientRepository.findByOriginURL(input.getOriginURL()).getId();
+    }
 }

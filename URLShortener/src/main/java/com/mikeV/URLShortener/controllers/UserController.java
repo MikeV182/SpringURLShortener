@@ -37,9 +37,12 @@ public class UserController {
 
     @PostMapping("/generate")
     public String generateURL(UserInput input) {
-        userService.add(input);
-        ShortURLGenerator.generateShortURL(input);
-        userService.update(input);
-        return "redirect:/generated/"+input.getId();
+        if (userService.urlAlreadyExistInDB(input) == null) {
+            userService.add(input);
+            ShortURLGenerator.generateShortURL(input);
+            userService.update(input);
+            return "redirect:/generated/"+input.getId();
+        }
+        return "redirect:/generated/"+userService.idOfAlreadyExistingURL(input);
     }
 }
